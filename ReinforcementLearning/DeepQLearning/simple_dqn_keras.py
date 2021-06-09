@@ -1,6 +1,7 @@
-from keras.layers import Dense, Activation
-from keras.models import Sequential, load_model
-from keras.optimizers import Adam
+import tensorflow as ts
+from tensorflow.keras.layers import Dense, Activation
+from tensorflow.keras.models import Sequential, load_model
+from tensorflow.keras.optimizers import Adam
 import numpy as np
 
 class ReplayBuffer(object):
@@ -44,13 +45,11 @@ class ReplayBuffer(object):
 
 def build_dqn(lr, n_actions, input_dims, fc1_dims, fc2_dims):
     model = Sequential([
-                Dense(fc1_dims, input_shape=(input_dims,)),
-                Activation('relu'),
-                Dense(fc2_dims),
-                Activation('relu'),
-                Dense(n_actions)])
+                Dense(units=fc1_dims, input_shape=(input_dims,), activation='relu'),
+                Dense(units=fc2_dims, activation='relu'),
+                Dense(units=n_actions)])
 
-    model.compile(optimizer=Adam(lr=lr), loss='mse')
+    model.compile(optimizer=Adam(learning_rate=lr), loss='mse')
 
     return model
 
